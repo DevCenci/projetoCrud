@@ -15,11 +15,11 @@ export default function Card(props) {
         cost={props.cost}
         listCard={props.listCard}
         setListCard={props.setListCard}
-        id={props.id}
+        idgames={props.idgames}
       />
       <div className="card-container" onClick={() => setOpen(true)}>
         <h1 className="card-title">{props.name}</h1>
-        <p className="card-id">{props.id}</p>
+        <p className="card-id">{props.idgames}</p>
         <p className="card-cartegory">{props.category}</p>
         <h3 className="card-cost">R${props.cost}</h3>
       </div>

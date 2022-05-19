@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Axios from "axios";
 import Card from "./components/cards/cards";
+ 
 
 export default function App() {
   const [values, setValues] = useState();
@@ -21,7 +22,7 @@ export default function App() {
         setListCard([
           ...listCard,
           {
-            id: response.data[0].id,
+            idgames: response.data[0].idgames,
             name: values.name,
             cost: values.cost,
             category: values.category,
@@ -47,31 +48,31 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="register-container">
-        <h1 className="register-title">Scrim Shop</h1>
+        <h1 className="register-title">Cenci Shop</h1>
 
         <input
           type="text"
           name="name"
-          placeholder="Nome"
+          placeholder="Nome do Jogo"
           className="register-input"
           onChange={handleaddValues}
         />
         <input
           type="text"
-          placeholder="Preço"
+          placeholder="Valor do Jogo"
           name="cost"
           className="register-input"
           onChange={handleaddValues}
         />
         <input
           type="text"
-          placeholder="Categoria"
+          placeholder="Estilo de Jogo"
           name="category"
           className="register-input"
           onChange={handleaddValues}
         />
 
-        <button onClick={handleRegisterGame} className="register-button">
+        <button onClick={handleRegisterGame} className="btn btn-primary">
           Cadastrar
         </button>
       </div>
@@ -80,8 +81,8 @@ export default function App() {
         <Card
           listCard={listCard}
           setListCard={setListCard}
-          key={val.id}
-          id={val.id}
+          key={val.idgames}
+          idgames={val.idgames}
           name={val.name}
           cost={val.cost}
           category={val.category}

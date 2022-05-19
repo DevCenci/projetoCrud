@@ -49,12 +49,13 @@ app.get("/getCards", (req, res) => {
 });
 
 app.put("/edit", (req, res) => {
-  const { id } = req.body;
+  console.log(req.body);
+  const { idgames } = req.body;
   const { name } = req.body;
   const { cost } = req.body;
   const { category } = req.body;
-  let mysql = "UPDATE games SET name = ?, cost = ?, category = ? WHERE id = ?";
-  db.query(mysql, [name, cost, category, id], (err, result) => {
+  let mysql = "UPDATE games SET name = ?, cost = ?, category = ? WHERE idgames = ?";
+  db.query(mysql, [name, cost, category, idgames], (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -65,10 +66,10 @@ app.put("/edit", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
-  let mysql = "DELETE FROM games WHERE id = ?";
+  let mysql = "DELETE FROM games WHERE idgames = ?";
   db.query(mysql, id, (err, result) => {
     if (err) {
-      console.log(err);
+      console.log(req.params.idgames);
     } else {
       res.send(result);
     }

@@ -6,21 +6,25 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Axios from "axios";
-import produce from "immer";
 
 export default function FormDialog(props) {
   const [editValues, setEditValues] = useState({
-    id: props.id,
+    idgames: props.idgames,
     name: props.title,
     cost: props.cost,
     category: props.category,
   });
 
   const handleChangeValues = (values) => {
-    setEditValues((prevValues) => ({
-      ...prevValues,
-      [values.target.id]: values.target.value,
-    }));
+    console.log(values);
+    let value = values.target.value;
+    let name = values.target.name;
+    setEditValues((prevalue) => {
+      return {
+        ...prevalue,   // Spread Operator               
+        [name]: value
+      }
+    })
   };
 
   const handleClose = () => {
@@ -29,16 +33,16 @@ export default function FormDialog(props) {
 
   const handleEditGame = () => {
     Axios.put("http://localhost:3001/edit", {
-      id: editValues.id,
+      idgames: editValues.idgames,
       name: editValues.name,
       cost: editValues.cost,
       category: editValues.category,
     }).then(() => {
       props.setListCard(
         props.listCard.map((value) => {
-          return value.id == editValues.id
+          return value.idgames === editValues.idgames
             ? {
-                id: editValues.id,
+                idgames: editValues.idgames,
                 name: editValues.name,
                 cost: editValues.cost,
                 category: editValues.category,
@@ -51,10 +55,10 @@ export default function FormDialog(props) {
   };
 
   const handleDeleteGame = () => {
-    Axios.delete(`http://localhost:3001/delete/${editValues.id}`).then(() => {
+    Axios.delete(`http://localhost:3001/delete/${editValues.idgames}`).then(() => {
       props.setListCard(
         props.listCard.filter((value) => {
-          return value.id != editValues.id;
+          return value.idgames !== editValues.idgames;
         })
       );
     });
@@ -73,9 +77,9 @@ export default function FormDialog(props) {
           <TextField
             disabled
             margin="dense"
-            id="id"
+            id="idgames"
             label="id"
-            defaultValue={props.id}
+            defaultValue={props.idgames}
             type="text"
             fullWidth
           />
@@ -83,6 +87,7 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="name"
+            name="name"
             label="Nome do jogo"
             defaultValue={props.title}
             type="text"
@@ -93,6 +98,7 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="cost"
+            name="cost"
             label="preço"
             defaultValue={props.cost}
             type="number"
@@ -103,6 +109,7 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="category"
+            name="category"
             label="Categoria"
             defaultValue={props.category}
             type="text"
